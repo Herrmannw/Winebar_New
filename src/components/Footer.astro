@@ -1,0 +1,69 @@
+---
+import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from "lucide-astro";
+import { business } from "../data/business";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__lead page-shell">
+    <div>
+      <p class="eyebrow">Stay awhile</p>
+      <h2>Come for the wine.<br /><em>Stay for the story.</em></h2>
+    </div>
+    <a class="button button--ivory" href={business.phoneActions.reservation}>
+      <Phone size={17} aria-hidden="true" />
+      {business.contact.phone}
+    </a>
+  </div>
+
+  <div class="site-footer__grid page-shell">
+    <div class="site-footer__brand">
+      <a class="wordmark wordmark--footer" href="/" aria-label={`${business.name} home`}>
+        <span class="wordmark__name">{business.name}</span>
+        <span class="wordmark__descriptor">{business.descriptor}</span>
+      </a>
+      <p>{business.shortDescription}</p>
+    </div>
+
+    <div>
+      <p class="footer-label">Visit</p>
+      <a class="footer-link footer-link--stacked" href={business.location.mapsHref} target="_blank" rel="noreferrer">
+        <MapPin size={16} aria-hidden="true" />
+        <span>{business.location.streetAddress}<br />{business.location.city}, {business.location.region} {business.location.postalCode}</span>
+      </a>
+    </div>
+
+    <div>
+      <p class="footer-label">Hours</p>
+      <ul class="hours-list">
+        {business.hours.map((row) => (
+          <li><span>{row.days}</span><span>{row.hours}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <p class="footer-label">Connect</p>
+      <div class="footer-links">
+        <a class="footer-link" href={business.contact.emailHref}>
+          <Mail size={16} aria-hidden="true" /> Email us
+        </a>
+        <a class="footer-link" href={business.phoneActions.privateEvents}>
+          <Phone size={16} aria-hidden="true" /> Private events
+        </a>
+        {business.socialLinks.map((social) => (
+          <a class="footer-link" href={social.href} target="_blank" rel="noreferrer">
+            <Instagram size={16} aria-hidden="true" /> {social.handle}
+          </a>
+        ))}
+        <a class="footer-link" href={business.contact.newsletterHref}>
+          Join the email list <ArrowUpRight size={15} aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom page-shell">
+    <p>&copy; {new Date().getFullYear()} {business.name}. All rights reserved.</p>
+    <p>Wine is better shared.</p>
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  image: ImageMetadata;
+  alt: string;
+  variant?: "home" | "page";
+  objectPosition?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  image,
+  alt,
+  variant = "page",
+  objectPosition = "center",
+} = Astro.props;
+---
+
+<section class:list={["page-hero", `page-hero--${variant}`]}>
+  <Image
+    class="page-hero__image"
+    src={image}
+    alt={alt}
+    widths={[640, 960, 1280, 1600, 1920]}
+    sizes="100vw"
+    format="webp"
+    loading="eager"
+    fetchpriority="high"
+    style={`object-position: ${objectPosition};`}
+  />
+  <div class="page-hero__veil" aria-hidden="true"></div>
+  <div class="page-hero__content page-shell">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p class="page-hero__lede">{lede}</p>
+    <slot />
+  </div>
+  <a class="scroll-cue" href="#after-hero" aria-label="Continue to page content">
+    <span>Discover</span>
+    <span class="scroll-cue__line" aria-hidden="true"></span>
+  </a>
+</section>

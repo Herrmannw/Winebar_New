@@ -1,0 +1,24 @@
+---
+import { ArrowLeft, Phone } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { business } from "../data/business";
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you were looking for could not be found. Return to DaVinci's Wine Lounge."
+  hideFooter={true}
+>
+  <section class="error-page page-shell">
+    <div class="error-page__number" aria-hidden="true">404</div>
+    <div class="error-page__content">
+      <p class="eyebrow eyebrow--brass">A wrong turn in the cellar</p>
+      <h1>This page has left the list.</h1>
+      <p>The bottle may be gone, but there is plenty more to discover.</p>
+      <div class="hero-actions">
+        <a class="button button--ivory" href="/"><ArrowLeft size={17} aria-hidden="true" /> Return home</a>
+        <a class="button button--cognac" href={business.contact.telHref}><Phone size={17} aria-hidden="true" /> Call us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

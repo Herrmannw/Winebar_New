@@ -1,0 +1,88 @@
+---
+import { Phone } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { business } from "../data/business";
+import { menuSections } from "../data/menu";
+import charcuterie from "../assets/images/charcuterie-board.jpg";
+---
+
+<BaseLayout
+  title="Menu & Wine List"
+  description="Explore DaVinci's curated wine flights, wines by the glass, featured bottles, craft beer, charcuterie, crostini, and gourmet small bites."
+>
+  <PageHero
+    eyebrow="The current selection"
+    title="Pour, pair, discover."
+    lede="A concise list of classic regions, boutique producers, and unexpected bottles—each selected with a story worth sharing."
+    image={charcuterie}
+    alt="A gourmet charcuterie board with cheese, fruit, nuts, and cured meats"
+    objectPosition="center 56%"
+  >
+    <div class="hero-actions">
+      <a class="button button--cognac" href={business.phoneActions.reservation}>
+        <Phone size={17} aria-hidden="true" /> Call to reserve
+      </a>
+    </div>
+  </PageHero>
+
+  <nav class="menu-anchor-nav" id="after-hero" aria-label="Menu categories">
+    <div class="page-shell">
+      {menuSections.map((section) => <a href={`#${section.id}`}>{section.label}</a>)}
+    </div>
+  </nav>
+
+  <div class="menu-page section--ivory">
+    <header class="menu-intro page-shell">
+      <p class="eyebrow eyebrow--brass">A living list</p>
+      <h2>Chosen by hand.<br /><em>Poured with purpose.</em></h2>
+      <p>
+        Our list changes with the seasons, the producers we meet, and the bottles that surprise us. Ask about off-list discoveries and limited arrivals from the retail shelves.
+      </p>
+    </header>
+
+    <div class="menu-content page-shell">
+      {menuSections.map((section, sectionIndex) => (
+        <section class="menu-section" id={section.id} aria-labelledby={`${section.id}-title`}>
+          <div class="menu-section__heading">
+            <span>0{sectionIndex + 1}</span>
+            <div>
+              <h2 id={`${section.id}-title`}>{section.label}</h2>
+              {section.introduction && <p>{section.introduction}</p>}
+            </div>
+          </div>
+
+          <div class="menu-items">
+            {section.items.map((item) => (
+              <article class="menu-item">
+                <div class="menu-item__copy">
+                  <div class="menu-item__name-row">
+                    <h3>{item.name}</h3>
+                    {item.tag && <span>{item.tag}</span>}
+                  </div>
+                  {item.origin && <p class="menu-item__origin">{item.origin}</p>}
+                  {item.details && <p class="menu-item__details">{item.details}</p>}
+                </div>
+                <div class="menu-item__prices">
+                  {item.glassPrice && <span><small>Glass</small>{item.glassPrice}</span>}
+                  {item.bottlePrice && <span><small>Bottle</small>{item.bottlePrice}</span>}
+                  {item.singlePrice && <span>{item.singlePrice}</span>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <aside class="menu-note page-shell">
+      <div class="ornament" aria-hidden="true"><span></span></div>
+      <p>
+        Vintages and availability change often. Please ask our team about current selections, dietary accommodations, and additional bottles in the shop.
+      </p>
+      <a class="button button--cognac" href={business.phoneActions.reservation}>
+        <Phone size={17} aria-hidden="true" /> Call to reserve
+      </a>
+    </aside>
+  </div>
+</BaseLayout>
