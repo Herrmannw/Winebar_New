@@ -9,6 +9,7 @@ import winePour from "../assets/images/wine-pour.jpg";
 import wineShelves from "../assets/images/wine-shelves.jpg";
 import sommelier from "../assets/images/sommelier-wine-tasting.jpg";
 import charcuterie from "../assets/images/charcuterie-board.jpg";
+import { withBase } from "../utils/paths";
 ---
 
 <BaseLayout
@@ -28,7 +29,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
       <a class="button button--cognac" href={business.phoneActions.reservation}>
         <Phone size={17} aria-hidden="true" /> Call to reserve
       </a>
-      <a class="button button--outline-light" href="/menu/">Explore the wine list</a>
+      <a class="button button--outline-light" href={withBase("/menu/")}>Explore the wine list</a>
     </div>
   </PageHero>
 
@@ -44,7 +45,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
   </section>
 
   <section class="image-links" aria-label="Explore DaVinci's">
-    <a class="image-link" href="/about/">
+    <a class="image-link" href={withBase("/about/")}>
       <Image
         src={winePour}
         alt="Red wine being poured into a glass"
@@ -59,7 +60,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
         <span class="image-link__arrow" aria-hidden="true"><ArrowRight size={21} /></span>
       </div>
     </a>
-    <a class="image-link" href="/menu/">
+    <a class="image-link" href={withBase("/menu/")}>
       <Image
         src={wineShelves}
         alt="A curated collection of wine bottles on wooden shelves"
@@ -83,7 +84,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
       <p class="body-large">
         Start with a guided flight, ask for a recommendation, or tell us the last bottle you loved. Our team makes discovery easy with welcoming conversation and a point of view you can trust.
       </p>
-      <a class="text-link" href="/about/">
+      <a class="text-link" href={withBase("/about/")}>
         Our philosophy <ArrowRight size={16} aria-hidden="true" />
       </a>
     </div>
@@ -144,7 +145,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
       <p class="body-large">
         Charcuterie, crostini, and gourmet plates are designed to meet the wine in your glass—and give everyone one more reason to stay for another pour.
       </p>
-      <a class="text-link" href="/menu/#boards-and-bites">
+      <a class="text-link" href={withBase("/menu/#boards-and-bites")}>
         See the bites <ArrowRight size={16} aria-hidden="true" />
       </a>
     </div>
@@ -159,7 +160,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
         Two thoughtful bottles each month, member tastings, retail savings, and first access to the wines and stories we cannot wait to share.
       </p>
     </div>
-    <a class="button button--ivory" href="/wine-club/">Explore membership</a>
+    <a class="button button--ivory" href={withBase("/wine-club/")}>Explore membership</a>
   </section>
 
   <section class="visit-section section section--ivory page-shell">

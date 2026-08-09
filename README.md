@@ -50,3 +50,13 @@ See the [Pexels license](https://www.pexels.com/license/) for usage terms. The f
 ## Social sharing image
 
 `public/og.png` is an original 1200×630 social card generated for this design. Replace it alongside the placeholder business details when final brand photography and a production domain are available.
+
+## Publish with GitHub Pages
+
+The repository includes `.github/workflows/deploy-pages.yml`, which builds and publishes the site whenever `main` is pushed. Production builds use the project base path `/Winebar_New`, while local development continues to run at `/`.
+
+1. In the GitHub repository, open **Settings → Pages**.
+2. Under **Build and deployment**, choose **GitHub Actions** as the source.
+3. Commit and push the project to `main`, or run the workflow manually from the **Actions** tab.
+
+The expected project URL is [https://herrmannw.github.io/Winebar_New/](https://herrmannw.github.io/Winebar_New/). If the repository is renamed or a custom domain is added, update `site` and the production `base` value in `astro.config.mjs`.

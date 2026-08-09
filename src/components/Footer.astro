@@ -1,6 +1,7 @@
 ---
 import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from "lucide-astro";
 import { business } from "../data/business";
+import { withBase } from "../utils/paths";
 ---
 
 <footer class="site-footer">
@@ -17,7 +18,7 @@ import { business } from "../data/business";
 
   <div class="site-footer__grid page-shell">
     <div class="site-footer__brand">
-      <a class="wordmark wordmark--footer" href="/" aria-label={`${business.name} home`}>
+      <a class="wordmark wordmark--footer" href={withBase("/")} aria-label={`${business.name} home`}>
         <span class="wordmark__name">{business.name}</span>
         <span class="wordmark__descriptor">{business.descriptor}</span>
       </a>

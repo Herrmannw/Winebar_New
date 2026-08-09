@@ -6,6 +6,7 @@ import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
 import winePour from "../assets/images/wine-pour.jpg";
 import coupleWine from "../assets/images/couple-wine.jpg";
+import { withBase } from "../utils/paths";
 ---
 
 <BaseLayout
@@ -82,7 +83,7 @@ import coupleWine from "../assets/images/couple-wine.jpg";
     <a class="button button--ivory" href={business.phoneActions.wineClub}>
       <Phone size={17} aria-hidden="true" /> Call {business.contact.phone}
     </a>
-    <a class="text-link" href="/menu/#featured-bottles">
+    <a class="text-link" href={withBase("/menu/#featured-bottles")}>
       Preview the cellar <ArrowRight size={16} aria-hidden="true" />
     </a>
   </section>

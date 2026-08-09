@@ -5,6 +5,7 @@ import "@fontsource-variable/manrope/wght.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { business } from "../data/business";
+import { stripBase, withBase } from "../utils/paths";
 import "../styles/global.css";
 
 interface Props {
@@ -17,8 +18,10 @@ const { title, description, hideFooter = false } = Astro.props;
 const pageTitle = title === business.name
   ? `${business.name} | ${business.descriptor}`
   : `${title} | ${business.name}`;
-const socialImage = Astro.site ? new URL("/og.png", Astro.site).toString() : "/og.png";
-const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const socialPath = withBase("/og.png");
+const canonicalPath = withBase(stripBase(Astro.url.pathname));
+const socialImage = Astro.site ? new URL(socialPath, Astro.site).toString() : socialPath;
+const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
 ---
 
 <!doctype html>

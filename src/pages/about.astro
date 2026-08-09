@@ -8,6 +8,7 @@ import coupleWine from "../assets/images/couple-wine.jpg";
 import sommelier from "../assets/images/sommelier-wine-tasting.jpg";
 import wineShelves from "../assets/images/wine-shelves.jpg";
 import charcuterie from "../assets/images/charcuterie-board.jpg";
+import { withBase } from "../utils/paths";
 ---
 
 <BaseLayout
@@ -55,7 +56,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
       <p class="body-large">
         There are no wrong questions here. Tell us what you usually drink, what you're eating, or how adventurous you feel. We will translate the labels, share the story, and pour a path worth exploring.
       </p>
-      <a class="text-link" href="/menu/">
+      <a class="text-link" href={withBase("/menu/")}>
         Explore the wine list <ArrowRight size={16} aria-hidden="true" />
       </a>
     </div>
@@ -94,7 +95,7 @@ import charcuterie from "../assets/images/charcuterie-board.jpg";
       <p class="body-large">
         Settle in for a flight and a board, then browse the shelves for tonight's dinner or your growing cellar. Our boutique shop turns every visit into a chance to bring home a new favorite.
       </p>
-      <a class="text-link" href="/menu/#featured-bottles">
+      <a class="text-link" href={withBase("/menu/#featured-bottles")}>
         Browse featured bottles <ArrowRight size={16} aria-hidden="true" />
       </a>
     </div>
