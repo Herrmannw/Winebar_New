@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { ArrowRight, Phone } from "lucide-astro";
+import { ArrowRight, Mail } from "lucide-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
@@ -10,45 +10,45 @@ import { withBase } from "../utils/paths";
 ---
 
 <BaseLayout
-  title="Wine Club"
-  description="Join the DaVinci's Wine Club for two curated bottles each month, guided tastings, retail savings, and priority access to special releases and events."
+  title="The Society"
+  description="Join The Society at DaVinci's for curated monthly wines, members-only tastings, preferred pricing, and special experiences behind the door."
 >
   <PageHero
-    eyebrow="The DaVinci's Wine Club"
-    title="Your next favorite bottle, waiting."
-    lede="A monthly invitation to drink beyond the familiar, guided by the bottles and people we cannot stop talking about."
+    eyebrow="The Society"
+    title="A little closer to the story."
+    lede="A membership for curious drinkers who want first access to the bottles, people, and experiences that inspire us."
     image={winePour}
     alt="Red wine being poured into a clear glass against a dark background"
     objectPosition="center 48%"
   >
     <div class="hero-actions">
-      <a class="button button--cognac" href={business.phoneActions.wineClub}>
-        <Phone size={17} aria-hidden="true" /> Call to join
+      <a class="button button--cognac" href={business.contact.societyHref}>
+        <Mail size={17} aria-hidden="true" /> Email to join
       </a>
     </div>
   </PageHero>
 
   <section class="club-intro section section--ivory page-shell" id="after-hero">
     <div>
-      <p class="eyebrow eyebrow--brass">A club for curious drinkers</p>
-      <h2>More than a monthly box.<br /><em>A way into the story.</em></h2>
+      <p class="eyebrow eyebrow--brass">For curious drinkers</p>
+      <h2>The bottles we’re excited about.<br /><em>Shared first.</em></h2>
     </div>
     <p class="body-large">
-      Each month, we select two bottles with a point of view—wines from independent producers, distinctive regions, and emerging voices. You will know why we chose them, what to pair them with, and what makes each one worth sharing.
+      The Society brings you closer to DaVinci’s through thoughtful monthly selections, intimate tastings, and first invitations to what is happening beyond the door.
     </p>
   </section>
 
-  <section class="club-benefits section section--emerald page-shell">
+  <section class="club-benefits section section--emerald page-shell" aria-labelledby="benefits-title">
     <div class="club-benefits__heading">
-      <p class="eyebrow eyebrow--brass">Member benefits</p>
-      <h2>Your seat at<br /><em>the tasting table.</em></h2>
+      <p class="eyebrow eyebrow--brass">Society benefits</p>
+      <h2 id="benefits-title">More to taste.<br /><em>More to discover.</em></h2>
     </div>
     <ol class="benefit-list">
-      <li><span>01</span><div><h3>Two curated bottles monthly</h3><p>A thoughtful pair chosen to explore a grape, place, producer, or idea.</p></div></li>
-      <li><span>02</span><div><h3>Tasting notes & pairings</h3><p>Approachable guidance that brings each bottle to life at your table.</p></div></li>
-      <li><span>03</span><div><h3>10% retail savings</h3><p>A member discount on bottles and wine accessories throughout the shop.</p></div></li>
-      <li><span>04</span><div><h3>Monthly tasting for two</h3><p>Bring a guest and explore the month's selections with our team.</p></div></li>
-      <li><span>05</span><div><h3>First access</h3><p>Priority invitations to tastings, events, and limited new releases.</p></div></li>
+      <li><span>01</span><div><h3>Two curated monthly wines</h3></div></li>
+      <li><span>02</span><div><h3>Members-only tastings</h3></div></li>
+      <li><span>03</span><div><h3>First access to limited bottles</h3></div></li>
+      <li><span>04</span><div><h3>Member pricing</h3></div></li>
+      <li><span>05</span><div><h3>Special experiences behind the door</h3></div></li>
     </ol>
   </section>
 
@@ -67,24 +67,24 @@ import { withBase } from "../utils/paths";
       <p class="eyebrow eyebrow--brass">How it works</p>
       <h2>Simple by design. Personal by nature.</h2>
       <ol class="club-steps">
-        <li><span>01</span><div><strong>Call to join</strong><p>We will answer questions and share current membership details.</p></div></li>
-        <li><span>02</span><div><strong>Pick up & taste</strong><p>Collect your bottles in the lounge and stay for the member tasting.</p></div></li>
-        <li><span>03</span><div><strong>Keep discovering</strong><p>Enjoy your wines at home, then tell us what you loved next time.</p></div></li>
+        <li><span>01</span><div><strong>Email to join</strong><p>Tell us you are interested and we will share current membership details.</p></div></li>
+        <li><span>02</span><div><strong>Pick up & taste</strong><p>Collect your monthly wines and get to know each selection with our team.</p></div></li>
+        <li><span>03</span><div><strong>Keep discovering</strong><p>Enjoy member access to the bottles and experiences we are most excited to share.</p></div></li>
       </ol>
     </div>
   </section>
 
   <section class="club-callout section page-shell">
     <p class="eyebrow">Membership details</p>
-    <h2>Ready to open something new?</h2>
+    <h2>Ready to join The Society?</h2>
     <p>
-      Membership pricing and current selections are available by phone. We would love to welcome you to the club.
+      Email us for current membership details and let us know what you are curious to discover next.
     </p>
-    <a class="button button--ivory" href={business.phoneActions.wineClub}>
-      <Phone size={17} aria-hidden="true" /> Call {business.contact.phone}
+    <a class="button button--ivory" href={business.contact.societyHref}>
+      <Mail size={17} aria-hidden="true" /> Email to join
     </a>
-    <a class="text-link" href={withBase("/menu/#featured-bottles")}>
-      Preview the cellar <ArrowRight size={16} aria-hidden="true" />
+    <a class="text-link" href={withBase("/menu/#experiences")}>
+      Explore experiences <ArrowRight size={16} aria-hidden="true" />
     </a>
   </section>
 </BaseLayout>

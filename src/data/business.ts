@@ -4,6 +4,7 @@ export interface ContactInfo {
   readonly email: string;
   readonly emailHref: `mailto:${string}`;
   readonly newsletterHref: `mailto:${string}`;
+  readonly societyHref: `mailto:${string}`;
 }
 
 export interface BusinessLocation {
@@ -34,7 +35,10 @@ export interface RecurringEvent {
   readonly description: string;
 }
 
+export type SocialPlatform = "instagram" | "facebook";
+
 export interface SocialLink {
+  readonly platform: SocialPlatform;
   readonly label: string;
   readonly handle: string;
   readonly href: `https://${string}`;
@@ -42,7 +46,6 @@ export interface SocialLink {
 
 export interface PhoneActions {
   readonly reservation: ContactInfo["telHref"];
-  readonly wineClub: ContactInfo["telHref"];
   readonly privateEvents: ContactInfo["telHref"];
 }
 
@@ -60,36 +63,40 @@ export interface BusinessInfo {
 }
 
 export const contact = {
-  phone: "(510) 555-0147",
-  telHref: "tel:+15105550147",
-  email: "hello@davinciswinebar.example",
-  emailHref: "mailto:hello@davinciswinebar.example",
+  phone: "(504) 432-5636",
+  telHref: "tel:+15044325636",
+  email: "wildflowerwinesllc@gmail.com",
+  emailHref: "mailto:wildflowerwinesllc@gmail.com",
   newsletterHref:
-    "mailto:hello@davinciswinebar.example?subject=Join%20the%20DaVinci%27s%20email%20list&body=Please%20add%20me%20to%20the%20DaVinci%27s%20email%20list.",
+    "mailto:wildflowerwinesllc@gmail.com?subject=Subscribe%20to%20DaVinci%27s%20updates&body=Please%20add%20me%20to%20the%20DaVinci%27s%20email%20list.",
+  societyHref:
+    "mailto:wildflowerwinesllc@gmail.com?subject=Join%20The%20Society&body=I%27m%20interested%20in%20joining%20The%20Society.%20Please%20send%20membership%20details.",
 } as const satisfies ContactInfo;
 
 export const location = {
-  streetAddress: "123 Harbor Lane",
-  city: "Alameda",
-  region: "CA",
-  postalCode: "94501",
-  displayAddress: "123 Harbor Lane, Alameda, CA 94501",
+  streetAddress: "2900 E. Nasa Pkwy, suite 250",
+  city: "Seabrook",
+  region: "TX",
+  postalCode: "77586",
+  displayAddress: "2900 E. Nasa Pkwy, suite 250, Seabrook, TX 77586",
   mapsHref:
-    "https://www.google.com/maps/search/?api=1&query=123%20Harbor%20Lane%2C%20Alameda%2C%20CA%2094501",
+    "https://www.google.com/maps/search/2900+E.+Nasa+Pkwy,+suite+250+Seabrook,+TX+77586?entry=gmail&source=g",
 } as const satisfies BusinessLocation;
 
 export const hours = [
-  { days: "Monday", hours: "Closed", isClosed: true },
-  { days: "Tuesday - Thursday", hours: "4:00 PM - 10:00 PM" },
-  { days: "Friday - Saturday", hours: "4:00 PM - 11:00 PM" },
-  { days: "Sunday", hours: "2:00 PM - 8:00 PM" },
+  { days: "Monday-Tuesday", hours: "Closed", isClosed: true },
+  { days: "Wednesday", hours: "3:00 PM – 10:00 PM" },
+  { days: "Thursday", hours: "3:00 PM – 10:00 PM" },
+  { days: "Friday", hours: "2:00 PM – 12:00 AM" },
+  { days: "Saturday", hours: "2:00 PM – 12:00 AM" },
+  { days: "Sunday", hours: "10:00 AM – 4:00 PM" },
 ] as const satisfies readonly BusinessHour[];
 
 export const navigation = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about/" },
-  { label: "Menu & Wine List", href: "/menu/" },
-  { label: "Wine Club", href: "/wine-club/" },
+  { label: "EXPERIENCES", href: "/menu/" },
+  { label: "SOCIETY", href: "/wine-club/" },
+  { label: "VISIT", href: "/visit/" },
+  { label: "OUR STORY", href: "/about/" },
 ] as const satisfies readonly NavigationItem[];
 
 export const recurringEvents = [
@@ -121,16 +128,22 @@ export const recurringEvents = [
 
 export const socialLinks = [
   {
+    platform: "instagram",
     label: "Instagram",
-    handle: "@davinciswinebar",
-    href: "https://www.instagram.com/",
+    handle: "@davincisloungetx",
+    href: "https://www.instagram.com/davincisloungetx/",
+  },
+  {
+    platform: "facebook",
+    label: "Facebook",
+    handle: "DaVincisLoungeTX",
+    href: "https://www.facebook.com/DaVincisLoungeTX",
   },
 ] as const satisfies readonly SocialLink[];
 
-// Every phone-based conversion intentionally resolves to the same owner-editable number.
+// Reservations and private-event inquiries intentionally share the same owner-editable number.
 export const phoneActions = {
   reservation: contact.telHref,
-  wineClub: contact.telHref,
   privateEvents: contact.telHref,
 } as const satisfies PhoneActions;
 
@@ -138,7 +151,7 @@ export const business = {
   name: "DaVinci's",
   descriptor: "Wine Lounge & Bottle Shop",
   shortDescription:
-    "A boutique wine lounge where exceptional wines, thoughtful hospitality, and unforgettable experiences come together.",
+    "A curated wine shop and hidden lounge for discovery, education, gourmet provisions, and experiences beyond the bottle.",
   contact,
   location,
   hours,

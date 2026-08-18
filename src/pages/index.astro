@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { ArrowRight, ArrowUpRight, Mail, Phone } from "lucide-astro";
+import { ArrowRight } from "lucide-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
@@ -8,58 +8,35 @@ import heroWineBar from "../assets/images/hero-wine-bar.jpg";
 import winePour from "../assets/images/wine-pour.jpg";
 import wineShelves from "../assets/images/wine-shelves.jpg";
 import sommelier from "../assets/images/sommelier-wine-tasting.jpg";
-import charcuterie from "../assets/images/charcuterie-board.jpg";
 import { withBase } from "../utils/paths";
 ---
 
 <BaseLayout
   title={business.name}
-  description="Discover DaVinci's, an intimate Alameda wine lounge and boutique bottle shop with curated pours, guided tastings, gourmet bites, and welcoming hospitality."
+  description="Discover DaVinci's, a curated bottle shop and hidden wine lounge where thoughtful hospitality, guided experiences, and gourmet provisions meet."
 >
   <PageHero
-    eyebrow="Wine lounge · Bottle shop · Alameda"
-    title="Wine worth slowing down for."
-    lede="An intimate neighborhood lounge where thoughtful hospitality, boutique bottles, and delicious discoveries meet."
+    eyebrow="Wine lounge · Bottle shop"
+    title="There’s more behind the bottle."
+    lede="Curated wines up front. Something unexpected awaits beyond the door."
     image={heroWineBar}
-    alt="An intimate wine bar lined with bottles and warm ambient light"
+    alt="An intimate wine lounge lined with bottles and warm ambient light"
     variant="home"
     objectPosition="center 54%"
-  >
-    <div class="hero-actions">
-      <a class="button button--cognac" href={business.phoneActions.reservation}>
-        <Phone size={17} aria-hidden="true" /> Call to reserve
-      </a>
-      <a class="button button--outline-light" href={withBase("/menu/")}>Explore the wine list</a>
-    </div>
-  </PageHero>
+  />
 
   <section class="manifesto section section--emerald page-shell" id="after-hero">
     <div class="manifesto__inner">
-      <p class="eyebrow eyebrow--brass">A new neighborhood ritual</p>
-      <h2>Exceptional bottles.<br /><em>Zero pretension.</em></h2>
+      <p class="eyebrow eyebrow--brass">The DaVinci’s experience</p>
+      <h2>Curated up front.<br /><em>Unexpected beyond.</em></h2>
       <p>
-        DaVinci's was created for curious drinkers and seasoned collectors alike. Every bottle is chosen for quality, value, and the story behind the winery—then shared with guidance that feels personal, never intimidating.
+        Begin in a thoughtful retail shop, then step through to an intimate lounge built around discovery, conversation, and the pleasure of finding something new.
       </p>
       <div class="ornament" aria-hidden="true"><span></span></div>
     </div>
   </section>
 
   <section class="image-links" aria-label="Explore DaVinci's">
-    <a class="image-link" href={withBase("/about/")}>
-      <Image
-        src={winePour}
-        alt="Red wine being poured into a glass"
-        widths={[640, 960, 1280]}
-        sizes="(max-width: 700px) 100vw, 50vw"
-        format="webp"
-        loading="lazy"
-      />
-      <div class="image-link__content">
-        <p class="eyebrow">The DaVinci's approach</p>
-        <h2>About us</h2>
-        <span class="image-link__arrow" aria-hidden="true"><ArrowRight size={21} /></span>
-      </div>
-    </a>
     <a class="image-link" href={withBase("/menu/")}>
       <Image
         src={wineShelves}
@@ -70,8 +47,23 @@ import { withBase } from "../utils/paths";
         loading="lazy"
       />
       <div class="image-link__content">
-        <p class="eyebrow">By the glass & by the bottle</p>
-        <h2>Wine & bites</h2>
+        <p class="eyebrow">Tastings · Classes · Gourmet provisions</p>
+        <h2>Experiences</h2>
+        <span class="image-link__arrow" aria-hidden="true"><ArrowRight size={21} /></span>
+      </div>
+    </a>
+    <a class="image-link" href={withBase("/about/")}>
+      <Image
+        src={winePour}
+        alt="Red wine being poured into a glass"
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 700px) 100vw, 50vw"
+        format="webp"
+        loading="lazy"
+      />
+      <div class="image-link__content">
+        <p class="eyebrow">Retail shop · Hidden lounge</p>
+        <h2>Our story</h2>
         <span class="image-link__arrow" aria-hidden="true"><ArrowRight size={21} /></span>
       </div>
     </a>
@@ -79,19 +71,19 @@ import { withBase } from "../utils/paths";
 
   <section class="editorial-split section--ivory">
     <div class="editorial-split__copy">
-      <p class="eyebrow eyebrow--brass">Curated for curiosity</p>
-      <h2>There is always more to taste.</h2>
+      <p class="eyebrow eyebrow--brass">Wine discovery</p>
+      <h2>FOLLOW YOUR CURIOSITY.</h2>
       <p class="body-large">
-        Start with a guided flight, ask for a recommendation, or tell us the last bottle you loved. Our team makes discovery easy with welcoming conversation and a point of view you can trust.
+        Tell us what you love. Tell us what you had last night. Tell us what you want to discover next.
       </p>
       <a class="text-link" href={withBase("/about/")}>
-        Our philosophy <ArrowRight size={16} aria-hidden="true" />
+        Discover our approach <ArrowRight size={16} aria-hidden="true" />
       </a>
     </div>
     <div class="editorial-split__image">
       <Image
         src={sommelier}
-        alt="A sommelier presenting a bottle of wine to friends at a table"
+        alt="A wine host presenting a bottle to guests at a table"
         widths={[640, 960, 1280]}
         sizes="(max-width: 980px) 100vw, 50vw"
         format="webp"
@@ -100,96 +92,33 @@ import { withBase } from "../utils/paths";
     </div>
   </section>
 
-  <section class="events-section section section--charcoal page-shell">
-    <div class="section-heading-row">
-      <div>
-        <p class="eyebrow eyebrow--brass">Happenings</p>
-        <h2>Taste something<br /><em>unexpected.</em></h2>
-      </div>
-      <p>
-        Guided flights, visiting makers, and first looks at new arrivals. Call us for this month's details and availability.
-      </p>
+  <section class="experiences-teaser section section--charcoal page-shell">
+    <div>
+      <p class="eyebrow eyebrow--brass">Experiences</p>
+      <h2>Evenings worth<br /><em>discovering.</em></h2>
     </div>
-
-    <ol class="event-list">
-      {business.events.map((event, index) => (
-        <li>
-          <span class="event-list__number">0{index + 1}</span>
-          <div class="event-list__title">
-            <p>{event.cadence} · {event.time}</p>
-            <h3>{event.name}</h3>
-          </div>
-          <p class="event-list__description">{event.description}</p>
-          <a href={business.contact.telHref} aria-label={`Call about ${event.name}`}>
-            <ArrowUpRight size={22} aria-hidden="true" />
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="editorial-split editorial-split--reverse section--ivory">
-    <div class="editorial-split__image">
-      <Image
-        src={charcuterie}
-        alt="A generous charcuterie board with artisan cheeses, fruit, and cured meats"
-        widths={[640, 960, 1280]}
-        sizes="(max-width: 980px) 100vw, 50vw"
-        format="webp"
-        loading="lazy"
-      />
-    </div>
-    <div class="editorial-split__copy">
-      <p class="eyebrow eyebrow--brass">At the table</p>
-      <h2>Small bites, made to linger over.</h2>
-      <p class="body-large">
-        Charcuterie, crostini, and gourmet plates are designed to meet the wine in your glass—and give everyone one more reason to stay for another pour.
-      </p>
-      <a class="text-link" href={withBase("/menu/#boards-and-bites")}>
-        See the bites <ArrowRight size={16} aria-hidden="true" />
-      </a>
+    <div class="experiences-teaser__copy">
+      <p class="body-large">Tastings, visiting winemakers, guided flights and evenings worth discovering.</p>
+      <ul class="experience-tags" aria-label="Experience highlights">
+        <li>Wine tastings</li>
+        <li>Education</li>
+        <li>Visiting winemakers</li>
+        <li>Members’ events</li>
+        <li>Special experiences</li>
+      </ul>
+      <a class="button button--ivory" href={withBase("/menu/")}>Explore experiences</a>
     </div>
   </section>
 
   <section class="club-band section page-shell">
     <div class="club-band__mark" aria-hidden="true">D</div>
     <div class="club-band__copy">
-      <p class="eyebrow">The DaVinci's Wine Club</p>
-      <h2>A better way to discover what you love.</h2>
+      <p class="eyebrow">The Society</p>
+      <h2>More access. More discovery.</h2>
       <p>
-        Two thoughtful bottles each month, member tastings, retail savings, and first access to the wines and stories we cannot wait to share.
+        Two curated monthly wines, members-only tastings, first access to limited bottles, member pricing, and special experiences behind the door.
       </p>
     </div>
-    <a class="button button--ivory" href={withBase("/wine-club/")}>Explore membership</a>
-  </section>
-
-  <section class="visit-section section section--ivory page-shell">
-    <div class="visit-section__intro">
-      <p class="eyebrow eyebrow--brass">Visit DaVinci's</p>
-      <h2>Your neighborhood<br /><em>glass awaits.</em></h2>
-    </div>
-
-    <div class="visit-section__details">
-      <div>
-        <p class="detail-label">Find us</p>
-        <a href={business.location.mapsHref} target="_blank" rel="noreferrer">
-          {business.location.streetAddress}<br />
-          {business.location.city}, {business.location.region} {business.location.postalCode}
-        </a>
-      </div>
-      <div>
-        <p class="detail-label">Hours</p>
-        <ul class="visit-hours">
-          {business.hours.map((row) => <li><span>{row.days}</span><span>{row.hours}</span></li>)}
-        </ul>
-      </div>
-      <div>
-        <p class="detail-label">Stay in the know</p>
-        <p>Get tasting dates, new arrivals, and member-only news in your inbox.</p>
-        <a class="text-link" href={business.contact.newsletterHref}>
-          <Mail size={15} aria-hidden="true" /> Join the email list
-        </a>
-      </div>
-    </div>
+    <a class="button button--ivory" href={withBase("/wine-club/")}>Enter The Society</a>
   </section>
 </BaseLayout>

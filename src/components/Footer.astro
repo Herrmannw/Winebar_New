@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from "lucide-astro";
+import { ArrowUpRight, Facebook, Instagram, Mail, Phone } from "lucide-astro";
 import { business } from "../data/business";
 import { withBase } from "../utils/paths";
 ---
@@ -7,12 +7,11 @@ import { withBase } from "../utils/paths";
 <footer class="site-footer">
   <div class="site-footer__lead page-shell">
     <div>
-      <p class="eyebrow">Stay awhile</p>
-      <h2>Come for the wine.<br /><em>Stay for the story.</em></h2>
+      <p class="eyebrow">Stay curious</p>
+      <h2>There is always more<br /><em>behind the bottle.</em></h2>
     </div>
     <a class="button button--ivory" href={business.phoneActions.reservation}>
-      <Phone size={17} aria-hidden="true" />
-      {business.contact.phone}
+      <Phone size={17} aria-hidden="true" /> Reserve
     </a>
   </div>
 
@@ -26,20 +25,12 @@ import { withBase } from "../utils/paths";
     </div>
 
     <div>
-      <p class="footer-label">Visit</p>
-      <a class="footer-link footer-link--stacked" href={business.location.mapsHref} target="_blank" rel="noreferrer">
-        <MapPin size={16} aria-hidden="true" />
-        <span>{business.location.streetAddress}<br />{business.location.city}, {business.location.region} {business.location.postalCode}</span>
-      </a>
-    </div>
-
-    <div>
-      <p class="footer-label">Hours</p>
-      <ul class="hours-list">
-        {business.hours.map((row) => (
-          <li><span>{row.days}</span><span>{row.hours}</span></li>
+      <p class="footer-label">Explore</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        {business.navigation.map((item) => (
+          <a class="footer-link" href={withBase(item.href)}>{item.label}</a>
         ))}
-      </ul>
+      </nav>
     </div>
 
     <div>
@@ -49,15 +40,18 @@ import { withBase } from "../utils/paths";
           <Mail size={16} aria-hidden="true" /> Email us
         </a>
         <a class="footer-link" href={business.phoneActions.privateEvents}>
-          <Phone size={16} aria-hidden="true" /> Private events
+          <Phone size={16} aria-hidden="true" /> Private Events
         </a>
         {business.socialLinks.map((social) => (
           <a class="footer-link" href={social.href} target="_blank" rel="noreferrer">
-            <Instagram size={16} aria-hidden="true" /> {social.handle}
+            {social.platform === "instagram"
+              ? <Instagram size={16} aria-hidden="true" />
+              : <Facebook size={16} aria-hidden="true" />}
+            {social.handle}
           </a>
         ))}
         <a class="footer-link" href={business.contact.newsletterHref}>
-          Join the email list <ArrowUpRight size={15} aria-hidden="true" />
+          Email updates <ArrowUpRight size={15} aria-hidden="true" />
         </a>
       </div>
     </div>

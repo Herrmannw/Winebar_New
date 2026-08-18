@@ -1,0 +1,178 @@
+---
+import { Phone, X } from "lucide-astro";
+
+interface Props {
+  recipient: string;
+  fallbackHref: `mailto:${string}`;
+  reservationHref: `tel:${string}`;
+}
+
+const { recipient, fallbackHref, reservationHref } = Astro.props;
+---
+
+<dialog
+  class="updates-panel"
+  id="updates-panel"
+  aria-labelledby="updates-panel-title"
+  aria-describedby="updates-panel-note"
+  data-recipient={recipient}
+  data-updates-dialog
+>
+  <div class="updates-panel__surface" data-updates-surface>
+    <button
+      class="updates-panel__close"
+      type="button"
+      aria-label="Close updates panel"
+      data-updates-close
+    >
+      <X size={24} stroke-width={1.4} aria-hidden="true" />
+    </button>
+
+    <p class="updates-panel__title" id="updates-panel-title">
+      Stay up to date on events, seasonal menus, and exclusive offers.
+    </p>
+
+    <form class="updates-panel__form" data-updates-form>
+      <label class="visually-hidden" for="updates-email">Email address</label>
+      <div class="updates-panel__form-row">
+        <input
+          class="updates-panel__input"
+          id="updates-email"
+          name="email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="Email address"
+          aria-describedby="updates-panel-note updates-panel-status"
+          required
+        />
+        <button class="button button--ivory updates-panel__submit" type="submit">
+          Subscribe
+        </button>
+      </div>
+      <p class="updates-panel__note" id="updates-panel-note">
+        Opens your email app. Nothing is stored here.
+      </p>
+      <p
+        class="updates-panel__status"
+        id="updates-panel-status"
+        role="status"
+        aria-live="polite"
+        data-updates-status
+      ></p>
+    </form>
+
+    <a
+      class="button button--outline-light updates-panel__reserve"
+      href={reservationHref}
+    >
+      <Phone size={18} stroke-width={1.5} aria-hidden="true" />
+      Reserve
+    </a>
+
+    <noscript>
+      <p class="updates-panel__fallback">
+        <a href={fallbackHref}>Subscribe by email</a>
+      </p>
+    </noscript>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-updates-dialog]");
+  const surface = dialog?.querySelector<HTMLElement>("[data-updates-surface]");
+  const closeButton = dialog?.querySelector<HTMLButtonElement>("[data-updates-close]");
+  const form = dialog?.querySelector<HTMLFormElement>("[data-updates-form]");
+  const emailInput = form?.querySelector<HTMLInputElement>('input[type="email"]');
+  const status = dialog?.querySelector<HTMLElement>("[data-updates-status]");
+  const openButtons = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-updates-open]"),
+  );
+
+  if (dialog && surface && form && emailInput) {
+    let openingTrigger: HTMLElement | null = null;
+    let returnFocus: HTMLElement | null = null;
+
+    const setExpanded = (expanded: boolean) => {
+      openButtons.forEach((button) => {
+        button.setAttribute("aria-controls", dialog.id);
+        button.setAttribute("aria-expanded", String(expanded));
+      });
+    };
+
+    const closeDialog = () => {
+      if (dialog.open) dialog.close();
+    };
+
+    const openDialog = (trigger: HTMLElement) => {
+      openingTrigger = trigger;
+
+      const mobileMenu = document.querySelector<HTMLDialogElement>("#mobile-navigation");
+      const mobileMenuTrigger = document.querySelector<HTMLElement>("[data-menu-open]");
+      const openedFromMobileMenu = Boolean(trigger.closest("#mobile-navigation"));
+
+      returnFocus = openedFromMobileMenu ? mobileMenuTrigger : trigger;
+
+      if (mobileMenu?.open) mobileMenu.close();
+      if (!dialog.open) dialog.showModal();
+
+      setExpanded(true);
+      document.documentElement.classList.add("updates-is-open");
+      if (status) status.textContent = "";
+
+      requestAnimationFrame(() => emailInput.focus({ preventScroll: true }));
+    };
+
+    setExpanded(false);
+
+    openButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        openDialog(button);
+      });
+    });
+
+    closeButton?.addEventListener("click", closeDialog);
+
+    dialog.addEventListener("click", (event) => {
+      if (!event.composedPath().includes(surface)) closeDialog();
+    });
+
+    dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeDialog();
+    });
+
+    dialog.addEventListener("close", () => {
+      setExpanded(false);
+      document.documentElement.classList.remove("updates-is-open");
+
+      const focusTarget = returnFocus ?? openingTrigger;
+      if (focusTarget?.isConnected) focusTarget.focus({ preventScroll: true });
+
+      openingTrigger = null;
+      returnFocus = null;
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const email = emailInput.value.trim();
+      const recipient = dialog.dataset.recipient;
+      if (!recipient) return;
+
+      const query = new URLSearchParams({
+        subject: "Subscribe to DaVinci's updates",
+        body: `Please add ${email} to the DaVinci's email list.`,
+      });
+
+      if (status) status.textContent = "Opening your email app…";
+      window.location.href = `mailto:${recipient}?${query.toString()}`;
+    });
+  }
+</script>

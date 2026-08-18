@@ -1,87 +1,131 @@
 ---
-import { Phone } from "lucide-astro";
+import { ArrowUpRight, Phone } from "lucide-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
-import { menuSections } from "../data/menu";
-import charcuterie from "../assets/images/charcuterie-board.jpg";
+import { experienceCategories, foodMenu } from "../data/menu";
+import sommelier from "../assets/images/sommelier-wine-tasting.jpg";
 ---
 
 <BaseLayout
-  title="Menu & Wine List"
-  description="Explore DaVinci's curated wine flights, wines by the glass, featured bottles, craft beer, charcuterie, crostini, and gourmet small bites."
+  title="Experiences"
+  description="Discover DaVinci's wine tastings, education, visiting winemakers, member gatherings, special experiences, and gourmet boards and bites."
 >
   <PageHero
-    eyebrow="The current selection"
-    title="Pour, pair, discover."
-    lede="A concise list of classic regions, boutique producers, and unexpected bottles—each selected with a story worth sharing."
-    image={charcuterie}
-    alt="A gourmet charcuterie board with cheese, fruit, nuts, and cured meats"
-    objectPosition="center 56%"
+    eyebrow="Tastings · Classes · Gatherings"
+    title="Experiences beyond the expected."
+    lede="Tastings, visiting winemakers, guided flights and evenings worth discovering."
+    image={sommelier}
+    alt="A wine professional presenting a bottle during an intimate guided tasting"
+    objectPosition="center 48%"
   >
     <div class="hero-actions">
       <a class="button button--cognac" href={business.phoneActions.reservation}>
-        <Phone size={17} aria-hidden="true" /> Call to reserve
+        <Phone size={17} aria-hidden="true" /> Reserve
       </a>
     </div>
   </PageHero>
 
-  <nav class="menu-anchor-nav" id="after-hero" aria-label="Menu categories">
+  <nav class="menu-anchor-nav" id="after-hero" aria-label="Experience sections">
     <div class="page-shell">
-      {menuSections.map((section) => <a href={`#${section.id}`}>{section.label}</a>)}
+      <a href="#experiences">Experiences</a>
+      <a href="#calendar">Recurring calendar</a>
+      <a href={`#${foodMenu.id}`}>{foodMenu.label}</a>
     </div>
   </nav>
 
+  <section class="principles section section--ivory page-shell" id="experiences" aria-labelledby="experiences-title">
+    <div class="principles__intro">
+      <p class="eyebrow eyebrow--brass">What awaits</p>
+      <h2 id="experiences-title">Come for the wine.<br /><em>Stay for what unfolds.</em></h2>
+    </div>
+
+    <ol class="numbered-list">
+      {experienceCategories.map((experience, index) => (
+        <li id={experience.id}>
+          <span>0{index + 1}</span>
+          <div>
+            <h3>{experience.label}</h3>
+            <p>{experience.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="events-section section section--charcoal page-shell" id="calendar" aria-labelledby="calendar-title">
+    <div class="section-heading-row">
+      <div>
+        <p class="eyebrow eyebrow--brass">Recurring experiences</p>
+        <h2 id="calendar-title">There is always something<br /><em>worth discovering.</em></h2>
+      </div>
+      <p>
+        Our recurring calendar is a starting point. Call for this month’s featured wines, visiting guests, and availability.
+      </p>
+    </div>
+
+    <ol class="event-list">
+      {business.events.map((event, index) => (
+        <li>
+          <span class="event-list__number">0{index + 1}</span>
+          <div class="event-list__title">
+            <p>{event.cadence} · {event.time}</p>
+            <h3>{event.name}</h3>
+          </div>
+          <p class="event-list__description">{event.description}</p>
+          <a href={business.phoneActions.reservation} aria-label={`Call about ${event.name}`}>
+            <ArrowUpRight size={22} aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
   <div class="menu-page section--ivory">
     <header class="menu-intro page-shell">
-      <p class="eyebrow eyebrow--brass">A living list</p>
-      <h2>Chosen by hand.<br /><em>Poured with purpose.</em></h2>
-      <p>
-        Our list changes with the seasons, the producers we meet, and the bottles that surprise us. Ask about off-list discoveries and limited arrivals from the retail shelves.
-      </p>
+      <p class="eyebrow eyebrow--brass">At the table</p>
+      <h2>Gourmet provisions.<br /><em>Made to share.</em></h2>
+      <p>{foodMenu.rotatingWineNote}</p>
     </header>
 
     <div class="menu-content page-shell">
-      {menuSections.map((section, sectionIndex) => (
-        <section class="menu-section" id={section.id} aria-labelledby={`${section.id}-title`}>
-          <div class="menu-section__heading">
-            <span>0{sectionIndex + 1}</span>
-            <div>
-              <h2 id={`${section.id}-title`}>{section.label}</h2>
-              {section.introduction && <p>{section.introduction}</p>}
-            </div>
+      <section class="menu-section" id={foodMenu.id} aria-labelledby={`${foodMenu.id}-title`}>
+        <div class="menu-section__heading">
+          <span>01</span>
+          <div>
+            <h2 id={`${foodMenu.id}-title`}>{foodMenu.label}</h2>
+            {foodMenu.introduction && <p>{foodMenu.introduction}</p>}
           </div>
+        </div>
 
-          <div class="menu-items">
-            {section.items.map((item) => (
-              <article class="menu-item">
-                <div class="menu-item__copy">
-                  <div class="menu-item__name-row">
-                    <h3>{item.name}</h3>
-                    {item.tag && <span>{item.tag}</span>}
-                  </div>
-                  {item.origin && <p class="menu-item__origin">{item.origin}</p>}
-                  {item.details && <p class="menu-item__details">{item.details}</p>}
+        <div class="menu-items">
+          {foodMenu.items.map((item) => (
+            <article class="menu-item">
+              <div class="menu-item__copy">
+                <div class="menu-item__name-row">
+                  <h3>{item.name}</h3>
+                  {item.tag && <span>{item.tag}</span>}
                 </div>
+                {item.details && <p class="menu-item__details">{item.details}</p>}
+              </div>
+              {item.singlePrice && (
                 <div class="menu-item__prices">
-                  {item.glassPrice && <span><small>Glass</small>{item.glassPrice}</span>}
-                  {item.bottlePrice && <span><small>Bottle</small>{item.bottlePrice}</span>}
-                  {item.singlePrice && <span>{item.singlePrice}</span>}
+                  <span>{item.singlePrice}</span>
                 </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
     </div>
 
     <aside class="menu-note page-shell">
       <div class="ornament" aria-hidden="true"><span></span></div>
       <p>
-        Vintages and availability change often. Please ask our team about current selections, dietary accommodations, and additional bottles in the shop.
+        Offerings and availability change with the seasons. Please ask our team about current wines, featured provisions, and dietary accommodations.
       </p>
       <a class="button button--cognac" href={business.phoneActions.reservation}>
-        <Phone size={17} aria-hidden="true" /> Call to reserve
+        <Phone size={17} aria-hidden="true" /> Reserve
       </a>
     </aside>
   </div>

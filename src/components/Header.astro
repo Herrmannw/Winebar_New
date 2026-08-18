@@ -2,6 +2,7 @@
 import { Menu as MenuIcon, Phone, X } from "lucide-astro";
 import { business } from "../data/business";
 import { stripBase, withBase } from "../utils/paths";
+import UpdatesPanel from "./UpdatesPanel.astro";
 
 interface Props {
   currentPath: string;
@@ -10,8 +11,7 @@ interface Props {
 const { currentPath } = Astro.props;
 const currentRoute = stripBase(currentPath);
 
-const isCurrent = (href: string) =>
-  href === "/" ? currentRoute === "/" : currentRoute.startsWith(href);
+const isCurrent = (href: string) => currentRoute.startsWith(href);
 ---
 
 <header class="site-header" data-site-header>
@@ -22,7 +22,7 @@ const isCurrent = (href: string) =>
 
   <nav class="desktop-nav" aria-label="Primary navigation">
     <ul>
-      {business.navigation.slice(1).map((item) => (
+      {business.navigation.map((item) => (
         <li>
           <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
             {item.label}
@@ -30,9 +30,19 @@ const isCurrent = (href: string) =>
         </li>
       ))}
     </ul>
+    <button
+      class="button button--small button--outline-light updates-trigger updates-trigger--desktop"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="updates-panel"
+      aria-expanded="false"
+      data-updates-open
+    >
+      STAY IN THE KNOW
+    </button>
     <a class="button button--small button--cognac" href={business.phoneActions.reservation}>
       <Phone size={15} aria-hidden="true" />
-      Call to reserve
+      Reserve
     </a>
   </nav>
 
@@ -73,19 +83,35 @@ const isCurrent = (href: string) =>
     </nav>
 
     <div class="mobile-menu__footer">
+      <button
+        class="button button--wide button--outline-light"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="updates-panel"
+        aria-expanded="false"
+        data-updates-open
+      >
+        STAY IN THE KNOW
+      </button>
       <a class="button button--wide button--cognac" href={business.phoneActions.reservation}>
         <Phone size={17} aria-hidden="true" />
-        Call to reserve
+        Reserve
       </a>
-      <p>{business.location.city}, {business.location.region}</p>
     </div>
   </dialog>
 
   <noscript>
     <nav class="nojs-nav" aria-label="Navigation without JavaScript">
       {business.navigation.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
+      <a href={business.contact.newsletterHref}>STAY IN THE KNOW</a>
     </nav>
   </noscript>
+
+  <UpdatesPanel
+    recipient={business.contact.email}
+    fallbackHref={business.contact.newsletterHref}
+    reservationHref={business.phoneActions.reservation}
+  />
 </header>
 
 <script>

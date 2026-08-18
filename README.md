@@ -19,20 +19,20 @@ npm run preview
 
 ## Update the business details
 
-Edit `src/data/business.ts` to change the phone number, email, address, hours, navigation, events, or social profile. Every phone-based action uses the single `contact.telHref` value, and the email-list button uses `contact.newsletterHref`.
+Edit `src/data/business.ts` to change the phone number, email, address, hours, navigation, recurring experiences, or social profiles. Reservation and private-event buttons use the centralized phone actions; email updates and Society enrollment use separate pre-filled email links.
 
-The current address, phone number, email address, hours, and Instagram profile are placeholders. The `.example` email address intentionally cannot receive messages and must be replaced before a public launch.
+The homepage subscription field does not store or transmit data to a service. It validates the visitor's address and opens their email app with a prepared message to DaVinci's.
 
-## Update the menu and wine list
+## Update experiences and food
 
-Edit `src/data/menu.ts`. Each `MenuSection` contains an `items` array. A `MenuItem` can use:
+Edit `src/data/menu.ts` to change the five experience categories, rotating-wine notice, or food offerings. `foodMenu.items` contains the owner-editable Boards & Bites list; each item uses:
 
-- `glassPrice` for a glass price
-- `bottlePrice` for a bottle price
-- `singlePrice` for flights, beer, or food
-- optional `origin`, `details`, and `tag` fields
+- `name` for the menu label
+- `details` for the description
+- `singlePrice` for the food price
+- an optional `tag`
 
-Keeping content in these typed files makes accidental field errors visible when `npm run check` runs.
+Named wines are intentionally not published because the selection rotates. Keeping the editable content in typed files makes accidental field errors visible when `npm run check` runs.
 
 ## Photography credits
 
@@ -49,7 +49,7 @@ See the [Pexels license](https://www.pexels.com/license/) for usage terms. The f
 
 ## Social sharing image
 
-`public/og.png` is an original 1200×630 social card generated for this design. Replace it alongside the placeholder business details when final brand photography and a production domain are available.
+`public/og.png` is an original 1200×630 social card generated for this design. Replace it when final brand photography is available.
 
 ## Publish with GitHub Pages
 
