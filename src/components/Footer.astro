@@ -50,9 +50,16 @@ import { withBase } from "../utils/paths";
             {social.handle}
           </a>
         ))}
-        <a class="footer-link" href={business.contact.newsletterHref}>
+        <button
+          class="footer-link footer-link--button"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="updates-panel"
+          aria-expanded="false"
+          data-updates-open
+        >
           Email updates <ArrowUpRight size={15} aria-hidden="true" />
-        </a>
+        </button>
       </div>
     </div>
   </div>

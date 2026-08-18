@@ -19,9 +19,20 @@ npm run preview
 
 ## Update the business details
 
-Edit `src/data/business.ts` to change the phone number, email, address, hours, navigation, recurring experiences, or social profiles. Reservation and private-event buttons use the centralized phone actions; email updates and Society enrollment use separate pre-filled email links.
+Edit `src/data/business.ts` to change the phone number, email, address, hours, navigation, recurring experiences, or social profiles. Reservation and private-event buttons use the centralized phone actions; Society enrollment uses a separate pre-filled email link.
 
-The homepage subscription field does not store or transmit data to a service. It validates the visitor's address and opens their email app with a prepared message to DaVinci's.
+## Enable email-update requests
+
+The Stay in the Know form uses Formspree to send each submitted address to DaVinci's. The website does not maintain a mailing list; the owner adds each address to their list manually.
+
+1. Create a Formspree form named **DaVinci's Website Updates** in an account owned by `wildflowerwinesllc@gmail.com`.
+2. Set and verify `wildflowerwinesllc@gmail.com` as the form's notification destination.
+3. Copy the form ID from its endpoint (the portion after `https://formspree.io/f/`).
+4. In `src/data/business.ts`, replace `REPLACE_WITH_FORM_ID` with that ID.
+
+The derived Formspree endpoint is public configuration, not a password or secret. Until the placeholder is replaced, subscription controls remain safely disabled and the no-JavaScript fallback reports that updates are temporarily unavailable. No Gmail password, API key, subscriber database, or newsletter automation belongs in this repository.
+
+Formspree stores the relayed submission in the owner's Formspree account as well as sending the notification email. Its current Free plan starts at 50 submissions per month and keeps 30 days of submission history; review [Formspree's account limits](https://help.formspree.io/articles/account-management/account-limits) before launch.
 
 ## Update experiences and food
 

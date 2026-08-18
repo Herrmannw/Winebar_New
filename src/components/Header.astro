@@ -40,10 +40,20 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
     >
       STAY IN THE KNOW
     </button>
-    <a class="button button--small button--cognac" href={business.phoneActions.reservation}>
+    <button
+      class="button button--small button--cognac reserve-reveal"
+      type="button"
+      aria-label={`Reservation phone number ${business.contact.phone}. Activate to reveal.`}
+      aria-pressed="false"
+      data-phone-number={business.contact.phone}
+      data-phone-reveal
+    >
       <Phone size={15} aria-hidden="true" />
-      Reserve
-    </a>
+      <span class="reserve-reveal__text" aria-hidden="true">
+        <span class="reserve-reveal__label">Reserve</span>
+        <span class="reserve-reveal__number">{business.contact.phone}</span>
+      </span>
+    </button>
   </nav>
 
   <button
@@ -93,23 +103,68 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
       >
         STAY IN THE KNOW
       </button>
-      <a class="button button--wide button--cognac" href={business.phoneActions.reservation}>
+      <button
+        class="button button--wide button--cognac reserve-reveal"
+        type="button"
+        aria-label={`Reservation phone number ${business.contact.phone}. Activate to reveal.`}
+        aria-pressed="false"
+        data-phone-number={business.contact.phone}
+        data-phone-reveal
+      >
         <Phone size={17} aria-hidden="true" />
-        Reserve
-      </a>
+        <span class="reserve-reveal__text" aria-hidden="true">
+          <span class="reserve-reveal__label">Reserve</span>
+          <span class="reserve-reveal__number">{business.contact.phone}</span>
+        </span>
+      </button>
     </div>
   </dialog>
 
   <noscript>
     <nav class="nojs-nav" aria-label="Navigation without JavaScript">
       {business.navigation.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
-      <a href={business.contact.newsletterHref}>STAY IN THE KNOW</a>
     </nav>
+
+    <div class="nojs-updates">
+      {business.subscription.isConfigured ? (
+        <form action={business.subscription.endpoint} method="POST">
+          <label for="nojs-updates-email">Stay in the know</label>
+          <div class="nojs-updates__row">
+            <input
+              id="nojs-updates-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Email address"
+              required
+            />
+            <button type="submit">Subscribe</button>
+          </div>
+          <input type="hidden" name="_subject" value="DaVinci's website updates request" />
+          <input type="hidden" name="source" value="Website no-JavaScript form" />
+          <div class="nojs-updates__honeypot" aria-hidden="true">
+            <label for="nojs-updates-company">Leave this field empty</label>
+            <input
+              id="nojs-updates-company"
+              name="_gotcha"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+        </form>
+      ) : (
+        <p>
+          Email updates are temporarily unavailable. <a href={business.contact.emailHref}>Email us</a>{" "}
+          to stay in touch.
+        </p>
+      )}
+    </div>
   </noscript>
 
   <UpdatesPanel
-    recipient={business.contact.email}
-    fallbackHref={business.contact.newsletterHref}
+    endpoint={business.subscription.endpoint}
+    configured={business.subscription.isConfigured}
     reservationHref={business.phoneActions.reservation}
   />
 </header>
@@ -118,6 +173,7 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
   const openButton = document.querySelector<HTMLButtonElement>("[data-menu-open]");
   const closeButton = document.querySelector<HTMLButtonElement>("[data-menu-close]");
   const mobileMenu = document.querySelector<HTMLDialogElement>("#mobile-navigation");
+  const phoneRevealButtons = document.querySelectorAll<HTMLButtonElement>("[data-phone-reveal]");
 
   openButton?.addEventListener("click", () => {
     mobileMenu?.showModal();
@@ -131,5 +187,27 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
   mobileMenu?.addEventListener("close", () => {
     openButton?.setAttribute("aria-expanded", "false");
     document.documentElement.classList.remove("menu-is-open");
+  });
+
+  phoneRevealButtons.forEach((button) => {
+    const phoneNumber = button.dataset.phoneNumber ?? "";
+
+    const setRevealed = (revealed: boolean) => {
+      button.setAttribute("aria-pressed", String(revealed));
+      button.setAttribute(
+        "aria-label",
+        revealed
+          ? `Reservation phone number ${phoneNumber}. Activate to hide.`
+          : `Reservation phone number ${phoneNumber}. Activate to reveal.`,
+      );
+    };
+
+    button.addEventListener("click", () => {
+      setRevealed(button.getAttribute("aria-pressed") !== "true");
+    });
+
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setRevealed(false);
+    });
   });
 </script>

@@ -3,8 +3,14 @@ export interface ContactInfo {
   readonly telHref: `tel:${string}`;
   readonly email: string;
   readonly emailHref: `mailto:${string}`;
-  readonly newsletterHref: `mailto:${string}`;
   readonly societyHref: `mailto:${string}`;
+}
+
+export interface SubscriptionConfig {
+  readonly formId: string;
+  readonly endpoint: `https://formspree.io/f/${string}`;
+  readonly notificationEmail: string;
+  readonly isConfigured: boolean;
 }
 
 export interface BusinessLocation {
@@ -60,6 +66,7 @@ export interface BusinessInfo {
   readonly events: readonly RecurringEvent[];
   readonly socialLinks: readonly SocialLink[];
   readonly phoneActions: PhoneActions;
+  readonly subscription: SubscriptionConfig;
 }
 
 export const contact = {
@@ -67,11 +74,20 @@ export const contact = {
   telHref: "tel:+15044325636",
   email: "wildflowerwinesllc@gmail.com",
   emailHref: "mailto:wildflowerwinesllc@gmail.com",
-  newsletterHref:
-    "mailto:wildflowerwinesllc@gmail.com?subject=Subscribe%20to%20DaVinci%27s%20updates&body=Please%20add%20me%20to%20the%20DaVinci%27s%20email%20list.",
   societyHref:
     "mailto:wildflowerwinesllc@gmail.com?subject=Join%20The%20Society&body=I%27m%20interested%20in%20joining%20The%20Society.%20Please%20send%20membership%20details.",
 } as const satisfies ContactInfo;
+
+// Replace this value with the ID from the owner-managed Formspree form.
+const subscriptionFormId: string = "REPLACE_WITH_FORM_ID";
+
+export const subscription = {
+  formId: subscriptionFormId,
+  endpoint: `https://formspree.io/f/${subscriptionFormId}`,
+  notificationEmail: contact.email,
+  isConfigured:
+    subscriptionFormId.trim().length > 0 && !subscriptionFormId.startsWith("REPLACE_"),
+} as const satisfies SubscriptionConfig;
 
 export const location = {
   streetAddress: "2900 E. Nasa Pkwy, suite 250",
@@ -159,4 +175,5 @@ export const business = {
   events: recurringEvents,
   socialLinks,
   phoneActions,
+  subscription,
 } as const satisfies BusinessInfo;
