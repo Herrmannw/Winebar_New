@@ -5,7 +5,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
 import winePour from "../assets/images/wine-pour.jpg";
-import coupleWine from "../assets/images/couple-wine.jpg";
+import societyWineShelves from "../assets/images/society-wine-shelves.jpg";
 import { withBase } from "../utils/paths";
 ---
 
@@ -43,20 +43,20 @@ import { withBase } from "../utils/paths";
       <p class="eyebrow eyebrow--brass">Society benefits</p>
       <h2 id="benefits-title">More to taste.<br /><em>More to discover.</em></h2>
     </div>
-    <ol class="benefit-list">
-      <li><span>01</span><div><h3>Two curated monthly wines</h3></div></li>
-      <li><span>02</span><div><h3>Members-only tastings</h3></div></li>
-      <li><span>03</span><div><h3>First access to limited bottles</h3></div></li>
-      <li><span>04</span><div><h3>Member pricing</h3></div></li>
-      <li><span>05</span><div><h3>Special experiences behind the door</h3></div></li>
-    </ol>
+    <ul class="benefit-list">
+      <li><h3>Two curated monthly wines</h3></li>
+      <li><h3>Members-only tastings</h3></li>
+      <li><h3>First access to limited bottles</h3></li>
+      <li><h3>Member pricing</h3></li>
+      <li><h3>Special experiences behind the door</h3></li>
+    </ul>
   </section>
 
   <section class="editorial-split editorial-split--reverse section--ivory">
     <div class="editorial-split__image">
       <Image
-        src={coupleWine}
-        alt="Two guests sharing wine and conversation at a cozy table"
+        src={societyWineShelves}
+        alt="Curated wine bottles arranged on warm wooden shelves in a boutique shop"
         widths={[640, 960, 1280]}
         sizes="(max-width: 980px) 100vw, 50vw"
         format="webp"

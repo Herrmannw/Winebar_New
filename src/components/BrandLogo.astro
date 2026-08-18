@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/images/davincis-logo-transparent.png";
+
+interface Props {
+  class?: string;
+  loading?: "eager" | "lazy";
+}
+
+const { class: className, loading = "eager" } = Astro.props;
+---
+
+<span class:list={["brand-logo", className]} aria-hidden="true">
+  <Image
+    class="brand-logo__image"
+    src={logo}
+    alt=""
+    width={600}
+    format="webp"
+    quality={92}
+    loading={loading}
+    decoding="async"
+  />
+</span>
+
+<style>
+  .brand-logo {
+    position: relative;
+    display: block;
+    aspect-ratio: 1668 / 332;
+    overflow: hidden;
+  }
+
+  .brand-logo__image {
+    position: absolute;
+    top: -49.4%;
+    left: -5.64%;
+    width: 111.64%;
+    max-width: none;
+    height: auto;
+  }
+</style>

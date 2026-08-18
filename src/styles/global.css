@@ -288,25 +288,12 @@ em {
 
 .wordmark {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: max-content;
-  line-height: 1;
 }
 
-.wordmark__name {
-  font-family: var(--serif);
-  font-size: clamp(2.05rem, 3vw, 2.85rem);
-  font-weight: 440;
-  letter-spacing: -0.045em;
-}
-
-.wordmark__descriptor {
-  margin-top: 0.34rem;
-  font-size: 0.48rem;
-  font-weight: 620;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
+.wordmark__logo {
+  width: clamp(12rem, 15vw, 15.5rem);
 }
 
 .desktop-nav,
@@ -1075,21 +1062,6 @@ em {
     var(--emerald-950);
 }
 
-.site-footer__lead {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 3rem;
-  padding-top: var(--section-space);
-  padding-bottom: clamp(4rem, 7vw, 7rem);
-  border-bottom: 1px solid var(--hairline-light);
-}
-
-.site-footer__lead h2 {
-  margin: 0;
-  font-size: clamp(3.2rem, 6vw, 6rem);
-}
-
 .site-footer__grid {
   display: grid;
   grid-template-columns: minmax(18rem, 1.4fr) minmax(9rem, 0.55fr) minmax(15rem, 1fr);
@@ -1100,6 +1072,10 @@ em {
 
 .wordmark--footer {
   margin-bottom: 1.5rem;
+}
+
+.wordmark--footer .wordmark__logo {
+  width: min(18rem, 100%);
 }
 
 .site-footer__brand > p {
@@ -1232,12 +1208,8 @@ em {
     min-height: 6.1rem;
   }
 
-  .wordmark__name {
-    font-size: 2rem;
-  }
-
-  .wordmark__descriptor {
-    font-size: 0.42rem;
+  .wordmark__logo {
+    width: 12rem;
   }
 
   .page-hero {
@@ -1281,15 +1253,6 @@ em {
   .image-link + .image-link {
     border-top: 1px solid rgba(247, 244, 240, 0.28);
     border-left: 0;
-  }
-
-  .site-footer__lead {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .site-footer__lead .button {
-    width: 100%;
   }
 
   .site-footer__grid {
@@ -1556,7 +1519,6 @@ em {
 }
 
 .numbered-list,
-.benefit-list,
 .club-steps {
   margin: 0;
   padding: 0;
@@ -1847,38 +1809,29 @@ em {
 }
 
 .benefit-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  border-top: 1px solid var(--hairline-light);
   border-color: var(--hairline-light);
 }
 
 .benefit-list li {
-  display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr);
-  gap: 1.5rem;
   padding-block: 1.8rem;
   border-bottom: 1px solid var(--hairline-light);
 }
 
-.benefit-list > li > span {
-  padding-top: 0.25rem;
+.benefit-list li::marker {
   color: var(--brass);
-  font-size: 0.59rem;
-  font-weight: 650;
-  letter-spacing: 0.15em;
+  font-size: 1rem;
 }
 
 .benefit-list h3 {
-  margin-bottom: 0.5rem;
+  margin: 0;
   font-family: var(--sans);
   font-size: 1.02rem;
   font-weight: 650;
   letter-spacing: -0.01em;
   line-height: 1.4;
-}
-
-.benefit-list p {
-  margin: 0;
-  color: rgba(247, 244, 240, 0.66);
-  font-size: 0.82rem;
 }
 
 .club-steps {

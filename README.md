@@ -54,7 +54,7 @@ The local photos are temporary, free-to-use selections from Pexels and should be
 - Wine pour — [Rojda / Pexels](https://www.pexels.com/photo/pouring-wine-to-glass-15170729/)
 - Charcuterie board — [Fernanda Leticia / Pexels](https://www.pexels.com/photo/delicious-gourmet-charcuterie-board-with-cheese-and-fruits-32978321/)
 - Wine shelves — [Florent Bertiaux / Pexels](https://www.pexels.com/photo/photo-of-wine-bottles-on-rack-2664149/)
-- Couple enjoying wine — [Jep Gambardella / Pexels](https://www.pexels.com/photo/a-loving-couple-drinking-wine-in-a-restaurant-5086769/)
+- Boutique wine shelves — [Taylor Thompson / Pexels](https://www.pexels.com/photo/selection-of-alcohol-bottles-on-shelves-20065951/)
 
 See the [Pexels license](https://www.pexels.com/license/) for usage terms. The files in `Ref/` are private design references and are not included in the built website.
 

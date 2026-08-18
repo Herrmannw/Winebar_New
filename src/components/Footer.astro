@@ -2,24 +2,14 @@
 import { ArrowUpRight, Facebook, Instagram, Mail, Phone } from "lucide-astro";
 import { business } from "../data/business";
 import { withBase } from "../utils/paths";
+import BrandLogo from "./BrandLogo.astro";
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__lead page-shell">
-    <div>
-      <p class="eyebrow">Stay curious</p>
-      <h2>There is always more<br /><em>behind the bottle.</em></h2>
-    </div>
-    <a class="button button--ivory" href={business.phoneActions.reservation}>
-      <Phone size={17} aria-hidden="true" /> Reserve
-    </a>
-  </div>
-
   <div class="site-footer__grid page-shell">
     <div class="site-footer__brand">
       <a class="wordmark wordmark--footer" href={withBase("/")} aria-label={`${business.name} home`}>
-        <span class="wordmark__name">{business.name}</span>
-        <span class="wordmark__descriptor">{business.descriptor}</span>
+        <BrandLogo class="wordmark__logo" loading="lazy" />
       </a>
       <p>{business.shortDescription}</p>
     </div>
