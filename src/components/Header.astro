@@ -3,7 +3,6 @@ import { Menu as MenuIcon, Phone, X } from "lucide-astro";
 import { business } from "../data/business";
 import { stripBase, withBase } from "../utils/paths";
 import BrandLogo from "./BrandLogo.astro";
-import UpdatesPanel from "./UpdatesPanel.astro";
 
 interface Props {
   currentPath: string;
@@ -11,6 +10,7 @@ interface Props {
 
 const { currentPath } = Astro.props;
 const currentRoute = stripBase(currentPath);
+const mailingListHref = withBase("/#mailing-list");
 
 const isCurrent = (href: string) => currentRoute.startsWith(href);
 ---
@@ -30,16 +30,12 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
         </li>
       ))}
     </ul>
-    <button
-      class="button button--small button--outline-light updates-trigger updates-trigger--desktop"
-      type="button"
-      aria-haspopup="dialog"
-      aria-controls="updates-panel"
-      aria-expanded="false"
-      data-updates-open
+    <a
+      class="button button--small button--outline-light mailing-list-trigger--desktop"
+      href={mailingListHref}
     >
-      STAY IN THE KNOW
-    </button>
+      JOIN OUR MAILING LIST
+    </a>
     <button
       class="button button--small button--cognac reserve-reveal"
       type="button"
@@ -92,16 +88,12 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
     </nav>
 
     <div class="mobile-menu__footer">
-      <button
+      <a
         class="button button--wide button--outline-light"
-        type="button"
-        aria-haspopup="dialog"
-        aria-controls="updates-panel"
-        aria-expanded="false"
-        data-updates-open
+        href={mailingListHref}
       >
-        STAY IN THE KNOW
-      </button>
+        JOIN OUR MAILING LIST
+      </a>
       <button
         class="button button--wide button--cognac reserve-reveal"
         type="button"
@@ -124,48 +116,7 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
       {business.navigation.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
     </nav>
 
-    <div class="nojs-updates">
-      {business.subscription.isConfigured ? (
-        <form action={business.subscription.endpoint} method="POST">
-          <label for="nojs-updates-email">Stay in the know</label>
-          <div class="nojs-updates__row">
-            <input
-              id="nojs-updates-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              placeholder="Email address"
-              required
-            />
-            <button type="submit">Subscribe</button>
-          </div>
-          <input type="hidden" name="_subject" value="DaVinci's website updates request" />
-          <input type="hidden" name="source" value="Website no-JavaScript form" />
-          <div class="nojs-updates__honeypot" aria-hidden="true">
-            <label for="nojs-updates-company">Leave this field empty</label>
-            <input
-              id="nojs-updates-company"
-              name="_gotcha"
-              type="text"
-              tabindex="-1"
-              autocomplete="off"
-            />
-          </div>
-        </form>
-      ) : (
-        <p>
-          Email updates are temporarily unavailable. <a href={business.contact.emailHref}>Email us</a>{" "}
-          to stay in touch.
-        </p>
-      )}
-    </div>
   </noscript>
-
-  <UpdatesPanel
-    endpoint={business.subscription.endpoint}
-    configured={business.subscription.isConfigured}
-    reservationHref={business.phoneActions.reservation}
-  />
 </header>
 
 <script>
@@ -173,6 +124,7 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
   const closeButton = document.querySelector<HTMLButtonElement>("[data-menu-close]");
   const mobileMenu = document.querySelector<HTMLDialogElement>("#mobile-navigation");
   const phoneRevealButtons = document.querySelectorAll<HTMLButtonElement>("[data-phone-reveal]");
+  const menuAnchors = mobileMenu?.querySelectorAll<HTMLAnchorElement>("a");
 
   openButton?.addEventListener("click", () => {
     mobileMenu?.showModal();
@@ -182,6 +134,7 @@ const isCurrent = (href: string) => currentRoute.startsWith(href);
 
   const closeMenu = () => mobileMenu?.close();
   closeButton?.addEventListener("click", closeMenu);
+  menuAnchors?.forEach((anchor) => anchor.addEventListener("click", closeMenu));
 
   mobileMenu?.addEventListener("close", () => {
     openButton?.setAttribute("aria-expanded", "false");

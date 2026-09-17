@@ -9,6 +9,7 @@ interface Props {
   alt: string;
   variant?: "home" | "page";
   objectPosition?: string;
+  continuationHref?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   alt,
   variant = "page",
   objectPosition = "center",
+  continuationHref = "#after-hero",
 } = Astro.props;
 ---
 
@@ -41,7 +43,7 @@ const {
     <p class="page-hero__lede">{lede}</p>
     <slot />
   </div>
-  <a class="scroll-cue" href="#after-hero" aria-label="Continue to page content">
+  <a class="scroll-cue" href={continuationHref} aria-label="Continue to page content">
     <span>Discover</span>
     <span class="scroll-cue__line" aria-hidden="true"></span>
   </a>

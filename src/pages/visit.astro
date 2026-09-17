@@ -1,7 +1,8 @@
 ---
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-astro";
+import { Mail, MapPin, Phone } from "lucide-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import SocialIconLinks from "../components/SocialIconLinks.astro";
 import { business } from "../data/business";
 import heroWineBar from "../assets/images/hero-wine-bar.jpg";
 ---
@@ -81,10 +82,6 @@ import heroWineBar from "../assets/images/hero-wine-bar.jpg";
     <a class="text-link" href={business.phoneActions.privateEvents}>
       <Phone size={16} aria-hidden="true" /> Private Events · {business.contact.phone}
     </a>
-    {business.socialLinks.map((social) => (
-      <a class="text-link" href={social.href} target="_blank" rel="noreferrer">
-        {social.label}: {social.handle} <ArrowUpRight size={16} aria-hidden="true" />
-      </a>
-    ))}
+    <SocialIconLinks links={business.socialLinks} tone="light" />
   </section>
 </BaseLayout>

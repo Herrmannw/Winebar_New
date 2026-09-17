@@ -1,0 +1,177 @@
+---
+import { Mail } from "lucide-astro";
+
+interface Props {
+  endpoint: `https://formspree.io/f/${string}`;
+  fallbackHref: `mailto:${string}`;
+  configured: boolean;
+}
+
+const { endpoint, fallbackHref, configured } = Astro.props;
+---
+
+<section
+  class="mailing-list section page-shell"
+  id="mailing-list"
+  aria-labelledby="mailing-list-heading"
+  data-mailing-list
+  data-configured={String(configured)}
+>
+  <div class="mailing-list__heading">
+    <p class="eyebrow">Notes from behind the door</p>
+    <h2 id="mailing-list-heading">Be first to know what’s happening behind the door.</h2>
+  </div>
+
+  <div class="mailing-list__signup">
+    <p>
+      Join our mailing list for tastings, new arrivals, seasonal menus, and special events at DaVinci’s.
+    </p>
+
+    {configured ? (
+      <>
+        <form
+          class="mailing-list__form"
+          action={endpoint}
+          method="POST"
+          aria-busy="false"
+          data-mailing-form
+        >
+          <label class="visually-hidden" for="mailing-list-email">Email address</label>
+          <div class="mailing-list__form-row">
+            <input
+              id="mailing-list-email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="Email address"
+              aria-describedby="mailing-list-note mailing-list-status"
+              required
+            />
+            <button class="button button--ivory" type="submit">
+              <span data-mailing-submit-label>Join the list</span>
+            </button>
+          </div>
+          <input
+            class="mailing-list__honeypot visually-hidden"
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <input type="hidden" name="_subject" value="New DaVinci’s mailing-list request" />
+          <input type="hidden" name="source" value="Homepage mailing-list section" />
+          <p class="mailing-list__note" id="mailing-list-note">
+            We’ll only send news worth opening. Your request goes directly to the DaVinci’s team.
+          </p>
+          <p
+            class="mailing-list__status"
+            id="mailing-list-status"
+            role="status"
+            aria-live="polite"
+            data-mailing-status
+          ></p>
+        </form>
+
+        <p
+          class="mailing-list__success"
+          role="status"
+          aria-live="polite"
+          tabindex="-1"
+          data-mailing-success
+          hidden
+        >
+          Thank you—your request has been sent to DaVinci’s. We’ll add you to our mailing list.
+        </p>
+      </>
+    ) : (
+      <div class="mailing-list__fallback">
+        <p>Send us a quick email and we’ll add you personally.</p>
+        <a class="button button--ivory" href={fallbackHref}>
+          <Mail size={18} stroke-width={1.6} aria-hidden="true" />
+          Email us to join
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>("[data-mailing-list]");
+  const form = section?.querySelector<HTMLFormElement>("[data-mailing-form]");
+  const emailInput = form?.querySelector<HTMLInputElement>('input[type="email"]');
+  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const submitLabel = form?.querySelector<HTMLElement>("[data-mailing-submit-label]");
+  const status = section?.querySelector<HTMLElement>("[data-mailing-status]");
+  const success = section?.querySelector<HTMLElement>("[data-mailing-success]");
+
+  if (section?.dataset.configured === "true" && form && emailInput) {
+    let activeRequest: AbortController | null = null;
+
+    const setSubmitting = (submitting: boolean) => {
+      form.setAttribute("aria-busy", String(submitting));
+      if (submitButton) submitButton.disabled = submitting;
+      if (submitLabel) submitLabel.textContent = submitting ? "Sending…" : "Join the list";
+    };
+
+    emailInput.addEventListener("invalid", () => {
+      if (status) status.textContent = "Please enter a valid email address.";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (activeRequest) return;
+
+      if (!form.checkValidity()) {
+        if (status) status.textContent = "Please enter a valid email address.";
+        form.reportValidity();
+        emailInput.focus({ preventScroll: true });
+        return;
+      }
+
+      if (status) status.textContent = "";
+      activeRequest = new AbortController();
+      const request = activeRequest;
+      setSubmitting(true);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+          signal: request.signal,
+        });
+
+        if (response.ok) {
+          form.hidden = true;
+          if (success) {
+            success.hidden = false;
+            success.focus({ preventScroll: true });
+          }
+          return;
+        }
+
+        if (status) {
+          status.textContent =
+            response.status === 429
+              ? "Too many requests were sent. Please wait a moment and try again."
+              : response.status >= 500
+                ? "We couldn’t send your request right now. Please try again shortly."
+                : "Your request wasn’t accepted. Please check your email address and try again.";
+        }
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (status) {
+          status.textContent = "We couldn’t connect. Check your internet connection and try again.";
+        }
+      } finally {
+        if (activeRequest === request) {
+          activeRequest = null;
+          setSubmitting(false);
+        }
+      }
+    });
+  }
+</script>

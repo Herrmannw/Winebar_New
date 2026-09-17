@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { ArrowRight } from "lucide-astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import MailingListSignup from "../components/MailingListSignup.astro";
 import PageHero from "../components/PageHero.astro";
 import { business } from "../data/business";
 import heroWineBar from "../assets/images/hero-wine-bar.jpg";
@@ -23,9 +24,28 @@ import { withBase } from "../utils/paths";
     alt="An intimate wine lounge lined with bottles and warm ambient light"
     variant="home"
     objectPosition="center 54%"
+    continuationHref="#mailing-list"
+  >
+    <div class="hero-hours" aria-label="Business hours">
+      <p class="hero-hours__label">Hours</p>
+      <ul>
+        {business.hours.map((row) => (
+          <li>
+            <span>{row.days}</span>
+            <strong>{row.hours}</strong>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </PageHero>
+
+  <MailingListSignup
+    endpoint={business.subscription.endpoint}
+    configured={business.subscription.isConfigured}
+    fallbackHref={business.subscription.fallbackHref}
   />
 
-  <section class="manifesto section section--emerald page-shell" id="after-hero">
+  <section class="manifesto section section--emerald page-shell">
     <div class="manifesto__inner">
       <p class="eyebrow eyebrow--brass">The DaVinci’s experience</p>
       <h2>Curated up front.<br /><em>Unexpected beyond.</em></h2>

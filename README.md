@@ -32,7 +32,7 @@ The Stay in the Know form uses Formspree to send each submitted address to DaVin
 3. Copy the form ID from its endpoint (the portion after `https://formspree.io/f/`).
 4. In `src/data/business.ts`, replace `REPLACE_WITH_FORM_ID` with that ID.
 
-The derived Formspree endpoint is public configuration, not a password or secret. Until the placeholder is replaced, subscription controls remain safely disabled and the no-JavaScript fallback reports that updates are temporarily unavailable. No Gmail password, API key, subscriber database, or newsletter automation belongs in this repository.
+The derived Formspree endpoint is public configuration, not a password or secret. Until the placeholder is replaced, the homepage mailing-list section offers a pre-addressed email fallback; once configured, it automatically switches to the inline Formspree form. No Gmail password, API key, subscriber database, or newsletter automation belongs in this repository.
 
 Formspree stores the relayed submission in the owner's Formspree account as well as sending the notification email. Its current Free plan starts at 50 submissions per month and keeps 30 days of submission history; review [Formspree's account limits](https://help.formspree.io/articles/account-management/account-limits) before launch.
 

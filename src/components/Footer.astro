@@ -1,8 +1,9 @@
 ---
-import { ArrowUpRight, Facebook, Instagram, Mail, Phone } from "lucide-astro";
+import { Mail, MailPlus, Phone } from "lucide-astro";
 import { business } from "../data/business";
 import { withBase } from "../utils/paths";
 import BrandLogo from "./BrandLogo.astro";
+import SocialIconLinks from "./SocialIconLinks.astro";
 ---
 
 <footer class="site-footer">
@@ -32,24 +33,13 @@ import BrandLogo from "./BrandLogo.astro";
         <a class="footer-link" href={business.phoneActions.privateEvents}>
           <Phone size={16} aria-hidden="true" /> Private Events
         </a>
-        {business.socialLinks.map((social) => (
-          <a class="footer-link" href={social.href} target="_blank" rel="noreferrer">
-            {social.platform === "instagram"
-              ? <Instagram size={16} aria-hidden="true" />
-              : <Facebook size={16} aria-hidden="true" />}
-            {social.handle}
-          </a>
-        ))}
-        <button
-          class="footer-link footer-link--button"
-          type="button"
-          aria-haspopup="dialog"
-          aria-controls="updates-panel"
-          aria-expanded="false"
-          data-updates-open
+        <a
+          class="footer-link"
+          href={withBase("/#mailing-list")}
         >
-          Email updates <ArrowUpRight size={15} aria-hidden="true" />
-        </button>
+          <MailPlus size={16} aria-hidden="true" /> Join our mailing list
+        </a>
+        <SocialIconLinks links={business.socialLinks} tone="light" />
       </div>
     </div>
   </div>

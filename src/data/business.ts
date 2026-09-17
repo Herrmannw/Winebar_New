@@ -9,6 +9,7 @@ export interface ContactInfo {
 export interface SubscriptionConfig {
   readonly formId: string;
   readonly endpoint: `https://formspree.io/f/${string}`;
+  readonly fallbackHref: `mailto:${string}`;
   readonly notificationEmail: string;
   readonly isConfigured: boolean;
 }
@@ -84,6 +85,8 @@ const subscriptionFormId: string = "REPLACE_WITH_FORM_ID";
 export const subscription = {
   formId: subscriptionFormId,
   endpoint: `https://formspree.io/f/${subscriptionFormId}`,
+  fallbackHref:
+    `mailto:${contact.email}?subject=Join%20DaVinci%27s%20mailing%20list&body=Please%20add%20me%20to%20the%20DaVinci%27s%20mailing%20list.`,
   notificationEmail: contact.email,
   isConfigured:
     subscriptionFormId.trim().length > 0 && !subscriptionFormId.startsWith("REPLACE_"),
@@ -100,11 +103,9 @@ export const location = {
 } as const satisfies BusinessLocation;
 
 export const hours = [
-  { days: "Monday-Tuesday", hours: "Closed", isClosed: true },
-  { days: "Wednesday", hours: "3:00 PM – 10:00 PM" },
-  { days: "Thursday", hours: "3:00 PM – 10:00 PM" },
-  { days: "Friday", hours: "2:00 PM – 12:00 AM" },
-  { days: "Saturday", hours: "2:00 PM – 12:00 AM" },
+  { days: "Monday–Tuesday", hours: "Closed", isClosed: true },
+  { days: "Wednesday–Thursday", hours: "3:00 PM – 10:00 PM" },
+  { days: "Friday–Saturday", hours: "2:00 PM – 12:00 AM" },
   { days: "Sunday", hours: "10:00 AM – 4:00 PM" },
 ] as const satisfies readonly BusinessHour[];
 
