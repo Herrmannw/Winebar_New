@@ -1,10 +1,10 @@
 import { defineConfig } from 'astro/config';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isGitHubPages = process.env.DEPLOY_TARGET === 'github';
 
 export default defineConfig({
-  site: 'https://herrmannw.github.io',
-  base: isProduction ? '/Winebar_New' : '/',
+  site: isGitHubPages ? 'https://herrmannw.github.io' : 'https://davincisloungetx.com',
+  base: isGitHubPages ? '/Winebar_New' : '/',
   output: 'static',
   trailingSlash: 'always',
   build: {

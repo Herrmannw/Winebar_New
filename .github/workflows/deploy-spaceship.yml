@@ -1,0 +1,53 @@
+name: Deploy to Spaceship
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spaceship-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # The FTP secrets are currently stored in this GitHub environment.
+    environment:
+      name: github-pages
+      url: https://davincisloungetx.com
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Astro project
+        run: npm run check
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Deploy to Spaceship
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.SPACESHIP_FTP_SERVER }}
+          username: ${{ secrets.SPACESHIP_FTP_USERNAME }}
+          password: ${{ secrets.SPACESHIP_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          security: strict
+          local-dir: ./dist/
+          server-dir: "${{ vars.SPACESHIP_FTP_SERVER_DIR || './' }}"

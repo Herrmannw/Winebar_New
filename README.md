@@ -17,6 +17,8 @@ npm run build
 npm run preview
 ```
 
+`npm run build` creates the root-domain build for `https://davincisloungetx.com/` in `dist/`.
+
 ## Update the business details
 
 Edit `src/data/business.ts` to change the phone number, email, address, hours, navigation, recurring experiences, or social profiles. Reservation and private-event buttons use the centralized phone actions; Society enrollment uses a separate pre-filled email link.
@@ -62,12 +64,30 @@ See the [Pexels license](https://www.pexels.com/license/) for usage terms. The f
 
 `public/og.png` is an original 1200×630 social card generated for this design. Replace it when final brand photography is available.
 
-## Publish with GitHub Pages
+## Publish to Spaceship
 
-The repository includes `.github/workflows/deploy-pages.yml`, which builds and publishes the site whenever `main` is pushed. Production builds use the project base path `/Winebar_New`, while local development continues to run at `/`.
+Every push to `main` runs `.github/workflows/deploy-spaceship.yml`. The workflow checks and builds the Astro site, then uploads the contents of `dist/` to Spaceship using explicit FTPS on port 21.
 
-1. In the GitHub repository, open **Settings → Pages**.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. Commit and push the project to `main`, or run the workflow manually from the **Actions** tab.
+The workflow uses these secrets from the `github-pages` GitHub environment:
 
-The expected project URL is [https://herrmannw.github.io/Winebar_New/](https://herrmannw.github.io/Winebar_New/). If the repository is renamed or a custom domain is added, update `site` and the production `base` value in `astro.config.mjs`.
+- `SPACESHIP_FTP_SERVER` — the Spaceship server hostname only, without `ftp://` or `ftpes://`
+- `SPACESHIP_FTP_USERNAME` — the complete FTP account username
+- `SPACESHIP_FTP_PASSWORD` — the FTP account password
+
+The FTP account should be restricted to the document root for `davincisloungetx.com`. With that setup, the workflow's default remote directory (`./`) is correct. If the FTP account starts above the document root, add an environment variable named `SPACESHIP_FTP_SERVER_DIR` containing the path to the domain folder, including a trailing slash (for example, `davincisloungetx.com/`). Spaceship uses the domain-named folder as the document root by default rather than `public_html`.
+
+You can also run the deployment manually from the repository's **Actions** tab. To make the same root-domain build without deploying, run:
+
+```bash
+npm run build
+```
+
+The output is written to `dist/` and uses `/` as its base path.
+
+## Optional GitHub Pages build
+
+The project still supports a GitHub Pages-compatible build at `/Winebar_New`, but the deployment workflow publishes the root-domain build to Spaceship. To create the GitHub Pages build locally, run:
+
+```bash
+npm run build:github
+```
